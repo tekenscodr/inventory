@@ -1,4 +1,3 @@
-import { logs } from "@/app/actions/logs";
 import prisma from "@/app/prismadb"
 import { NextResponse } from "next/server"
 
