@@ -79,7 +79,7 @@ interface ReceiptProps {
 }
 
 const Receipt: React.FC<ReceiptProps> = ({ receiptDetails = {}, showReceipt, onClose }) => {
-    const componentRef = useRef();
+    const componentRef = useRef<HTMLDivElement>(null);
     const handlePrint = useReactToPrint({
         content: () => componentRef.current || null,
     });
@@ -120,7 +120,7 @@ const Receipt: React.FC<ReceiptProps> = ({ receiptDetails = {}, showReceipt, onC
                 </DialogFooter>
             </DialogContent>
 
-            {handlePrint && (
+            {typeof handlePrint === 'function' && (
                 <div style={{ display: "none" }}>
                     <div ref={componentRef}>
                         <ReceiptContent receiptDetails={receiptDetails} />
