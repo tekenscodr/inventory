@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "prisma generate && next dev",
-    "build": "next build",
+    "dev": "next dev",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -40,7 +40,7 @@
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
   },
-
+  
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cookie": "^0.6.0",
