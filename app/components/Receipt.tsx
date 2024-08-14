@@ -81,7 +81,7 @@ interface ReceiptProps {
 const Receipt: React.FC<ReceiptProps> = ({ receiptDetails = {}, showReceipt, onClose }) => {
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
+        content: () => componentRef.current || null,
     });
     if (!receiptDetails) {
         return <></>
