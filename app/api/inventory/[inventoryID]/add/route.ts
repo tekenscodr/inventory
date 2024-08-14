@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request, context: any) {
     try {
-        const { quantity, reorderLevel, reorderQuantity, sellingPrice, unitPrice, } = await request.json();
+        const { reorderLevel, reorderQuantity, sellingPrice, unitPrice, } = await request.json();
         const { inventoryID } = context.params;
 
         const oldQty = await prisma.inventory.findFirst({
