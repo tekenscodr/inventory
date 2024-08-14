@@ -55,6 +55,7 @@ const Signinform = (props: Props) => {
                             className='p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black'
                             id='username'
                             placeholder='username'
+                            defaultValue='ensleybd'
                             {...register('username', {
                             })} />
                         <label htmlFor="" className='mb-2'>Password</label>
@@ -63,6 +64,7 @@ const Signinform = (props: Props) => {
                             className='p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black'
                             id='password'
                             placeholder='password'
+                            defaultValue='tekens243'
                             {...register('password', {
                             })} />
                         <SubmitButton text='Login Now' />
