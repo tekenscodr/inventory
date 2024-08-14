@@ -29,10 +29,7 @@ export async function POST(req: Request) {
         if (!user) return NextResponse.json({ error: 'User not found' });
         // Else return  
 
-        await axios.post('/api/get-cookie', {
-            action: "register",
-            location: "users",
-        })
+        await logs("registered new user", "users", user.userID)
         return NextResponse.json({ message: 'Register successful', user });
 
     } catch (error) {
