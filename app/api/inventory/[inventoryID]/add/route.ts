@@ -6,7 +6,12 @@ export async function POST(request: Request, context: { params: { inventoryID: s
         const { reorderLevel, reorderQuantity, sellingPrice, unitPrice } = await request.json();
         const { inventoryID } = context.params;
 
-        if (!reorderLevel || !reorderQuantity || !sellingPrice || !unitPrice) {
+        if (
+            typeof reorderLevel !== "number" ||
+            typeof reorderQuantity !== "number" ||
+            typeof sellingPrice !== "number" ||
+            typeof unitPrice !== "number"
+        ) {
             return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
         }
 
@@ -20,6 +25,10 @@ export async function POST(request: Request, context: { params: { inventoryID: s
         }
 
         const totalQty = oldQty.quantity + reorderQuantity;
+        if (totalQty < 0) {
+            return NextResponse.json({ message: "Invalid quantity" }, { status: 400 });
+        }
+
         const updatedInventory = await prisma.inventory.update({
             where: { productID: inventoryID },
             data: { quantity: totalQty, reorderLevel, reorderQuantity },
