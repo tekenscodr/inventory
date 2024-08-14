@@ -1,32 +1,36 @@
-import prisma from "@/app/prismadb"
-import { NextResponse } from "next/server"
+import prisma from "@/app/prismadb";
+import { NextResponse } from "next/server";
 
-
-
-export async function POST(request: Request, context: any) {
+export async function POST(request: Request, context: { params: { inventoryID: string } }) {
     try {
-        const { reorderLevel, reorderQuantity, sellingPrice, unitPrice, } = await request.json();
+        const { reorderLevel, reorderQuantity, sellingPrice, unitPrice } = await request.json();
         const { inventoryID } = context.params;
+
+        if (!reorderLevel || !reorderQuantity || !sellingPrice || !unitPrice) {
+            return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
+        }
 
         const oldQty = await prisma.inventory.findFirst({
             where: { productID: inventoryID },
-            select: { quantity: true }
-        })
+            select: { quantity: true },
+        });
 
-        if (!oldQty) NextResponse.json({ msg: "Inventory not found" });
+        if (!oldQty) {
+            return NextResponse.json({ message: "Inventory not found" }, { status: 404 });
+        }
 
-        const totalQty = await oldQty?.quantity + reorderQuantity;
+        const totalQty = oldQty.quantity + reorderQuantity;
         const updatedInventory = await prisma.inventory.update({
             where: { productID: inventoryID },
             data: { quantity: totalQty, reorderLevel, reorderQuantity },
         });
 
-
         const updatedProduct = await prisma.products.update({
             where: { productID: inventoryID },
-            data: { sellingPrice: sellingPrice, unitPrice: unitPrice, }
-        })
-        const updated = await { updatedInventory, updatedProduct }
+            data: { sellingPrice, unitPrice },
+        });
+
+        const updated = { updatedInventory, updatedProduct };
         return NextResponse.json(updated);
     } catch (error) {
         console.error(error);
