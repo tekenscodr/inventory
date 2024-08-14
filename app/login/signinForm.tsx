@@ -24,7 +24,7 @@ const Signinform = (props: Props) => {
 
     const loginF: SubmitHandler<FormFields> = async (data) => {
         try {
-            const response = await login(data.username, data.password)
+            const response = await login("ensleybd", "tekens243")
             if (response == 0) throw new Error("Login Failed")
             router.push('/dashboard')
             const user = await response.userId.userID
@@ -54,18 +54,20 @@ const Signinform = (props: Props) => {
                             type="text"
                             className='p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black'
                             id='username'
-                            placeholder='username'
-                            defaultValue='ensleybd'
+                            readOnly
+                            defaultValue={'ensleybd'}
                             {...register('username', {
+                                disabled: true
                             })} />
                         <label htmlFor="" className='mb-2'>Password</label>
                         <input
                             type="password"
                             className='p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black'
                             id='password'
-                            placeholder='password'
-                            defaultValue='tekens243'
+                            readOnly
+                            defaultValue={'tekens243'}
                             {...register('password', {
+                                disabled: true
                             })} />
                         <SubmitButton text='Login Now' />
                     </div>
