@@ -9,11 +9,11 @@ export type PageProps = {
 
 const Sales = (props: PageProps) => {
     return (
-        <div className='flex p-4 min-h-full'>
-            <div className='mr-4 flex-1 h-full'>
+        <div className='flex p-4 min-h-full w-full overflow-hidden'>
+            <div className='mr-4 flex-1 h-full w-1/2'>
                 <BarCharts />
             </div>
-            <div className='flex-1 h-full'>
+            <div className='flex-1 h-full w-1/2'>
                 <SalesWrapper {...props} />
             </div>
         </div>
