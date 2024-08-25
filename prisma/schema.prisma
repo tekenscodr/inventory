@@ -84,9 +84,14 @@ model Logs {
 }
 
 model User {
-  userID   String @id @default(uuid())
-  username String
-  password String
-
+  userID    String   @id @default(uuid())
+  username  String
+  password  String
+  role      Role     @default(Admin)
   createdAt DateTime @default(now())
+}
+
+enum Role {
+  Admin
+  User
 }
