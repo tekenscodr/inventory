@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useForm, useFieldArray, useWatch, Controller } from 'react-hook-form';
@@ -50,6 +50,55 @@ const TotalPrice = ({ control }: { control: any }) => {
         GHC {totalPrice.toFixed(2)}
       </p>
     </div>
+  );
+};
+
+
+
+const ParseTotalPrice = ({ control }: { control: any }) => {
+  const fields = useWatch({
+    control,
+    name: 'fields',
+  });
+
+  const totalPrice = fields.reduce((total: number, field: { qty: number; unitPrice: number; discount: number; }) => {
+    const discountAmount = field.discount * field.qty;
+    return total + (field.qty * field.unitPrice) - discountAmount;
+  }, 0);
+
+  const [amount, setAmount] = useState(0);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    setBalance(amount - totalPrice);
+  }, [totalPrice, amount]);
+
+  return (
+    <Card className="w-[350px] mt-2">
+      <CardHeader>
+        <CardTitle>Payment</CardTitle>
+        <CardDescription>Find the balance to be given</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form>
+          <div className="grid w-full items-center gap-4">
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="amount">Amount</Label>
+              <Input
+                id="amount"
+                type="number"
+                placeholder="How much did customer pay"
+                value={amount}
+                onChange={(e) => setAmount(Number(e.target.value))}
+              />
+            </div>
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <h3 className="text-end font-medium ">Balance: GHC {balance.toFixed(2)}</h3>
+      </CardFooter>
+    </Card>
   );
 };
 
@@ -241,6 +290,8 @@ const SalesForm = () => {
           </CardFooter>
         </Card>
       </form>
+      <ParseTotalPrice control={control} />
+
     </>
   );
 };
