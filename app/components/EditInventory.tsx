@@ -38,7 +38,7 @@ const EditInventory = (props: secret) => {
             const response = await axios.put(`/api/inventory/${props.productID}/edit`, data);
             console.log(response);
             const user = await localStorage.getItem('user')
-            await logs('Edited Inventory', 'inventory', user || '', response.data)
+            await logs('Edited Inventory', 'inventory', user || '', JSON.stringify(response.data))
             router.push('/dashboard/product')
             await setIsOpen(false);
             reset();

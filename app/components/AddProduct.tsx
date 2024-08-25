@@ -31,7 +31,7 @@ const AddProduct = () => {
     try {
       const response = await axios.post('/api/product', data);
       const user = await localStorage.getItem('user')
-      await logs('Added Product', 'inventory', user || '')
+      await logs('Added Product', 'inventory', user || '', JSON.stringify(response.data))
       router.push('/dashboard/product')
       reset()
       return toast({

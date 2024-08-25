@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         };
         const token = generateToken(tokenPayload);
         const result = { ...user, token }
-        await logs('Login', 'userdb', user.userID)
+        await logs('Login', 'userdb', user.userID, JSON.stringify(user))
 
         return NextResponse.json({ message: 'Login successful', result });
     } catch (error) {

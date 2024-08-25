@@ -28,8 +28,8 @@ export async function POST(req: Request) {
         // Check if data is parsed to DB
         if (!user) return NextResponse.json({ error: 'User not found' });
         // Else return  
-
-        await logs("registered new user", "users", user.userID)
+        const currentUser = await localStorage.getItem('user')
+        await logs("registered new user", "users", currentUser || '', JSON.stringify(user))
         return NextResponse.json({ message: 'Register successful', user });
 
     } catch (error) {

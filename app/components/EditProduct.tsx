@@ -34,7 +34,7 @@ const EditProduct = (props: secret) => {
         try {
             const response = await axios.put(`/api/product/${data.productID}/edit`, data);
             const user = await localStorage.getItem('user')
-            await logs('Added Product', 'inventory', user || '', response.data)
+            await logs('Added Product', 'inventory', user || '', JSON.stringify(response.data))
             router.push('/dashboard/product')
             reset()
             return toast({
