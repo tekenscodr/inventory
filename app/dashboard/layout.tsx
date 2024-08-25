@@ -9,10 +9,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (
         <main>
             <div className="flex min-h-screen w-full">
-                <div className="w-1/4 p-4">
+                <div className="w-1/5 p-4">
                     <SideNav />
                 </div>
-                <div className="p-4  bg-gray-100 w-3/4">
+                <div className="p-4  bg-gray-100 w-full">
                     <TopCards />
                     <Provider>
                         {children}

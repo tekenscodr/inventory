@@ -76,6 +76,7 @@ model Receipts {
 model Logs {
   logsID   String @id @default(uuid())
   action   String
+  details  String @default("")
   location String
   userID   String
 

@@ -2,14 +2,15 @@
 import prisma from "@/app/prismadb"
 import { cookies, headers } from 'next/headers'
 
-export async function logs(action: string, location: string, user: string) {
+export async function logs(action: string, location: string, user: string, details: string) {
     try {
 
         const savedlog = await prisma.logs.create({
             data: {
                 action: action,
                 location: location,
-                userID: user
+                userID: user,
+                details: details
             }
         })
 

@@ -107,8 +107,6 @@ const SalesForm = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const user = await localStorage.getItem('user')
-      await logs('Sales Made', 'inventory', user || '')
       const mappedData = data.fields.map((field: any) => {
         const productName = options.find((option: any) => option.value === field.productName)?.label;
         return {
@@ -127,6 +125,8 @@ const SalesForm = () => {
           description: "Order Booked"
         })
         setOrder(response.data);
+        const user = localStorage.getItem('user')
+        logs('Sales Made', 'inventory', user || '', response.data)
         setShowReceipt(true);
         console.log(response)
 
